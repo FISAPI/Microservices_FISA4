@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+
+  vue-front:
+    image: vue-front:latest
+    container_name: vue-front
+    hostname: vue-front
+    build:
+      context: vue-front
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
   
   spring-pay-1:
     image: spring-pay:latest
