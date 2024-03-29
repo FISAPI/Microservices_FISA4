@@ -1,12 +1,12 @@
-package com.mcommandes;
+package com.mproduits;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class McommandesApplication {
+public class SpringProductApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(McommandesApplication.class, args);
+		SpringApplication.run(SpringProductApp.class, args);
 	}
 }

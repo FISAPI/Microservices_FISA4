@@ -1,12 +1,12 @@
-package com.mproduits;
+package com.mpaiement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MproduitsApplication {
+public class SpringPayApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MproduitsApplication.class, args);
+		SpringApplication.run(SpringPayApp.class, args);
 	}
 }
