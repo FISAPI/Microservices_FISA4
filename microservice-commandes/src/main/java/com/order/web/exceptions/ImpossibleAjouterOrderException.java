@@ -1,4 +1,4 @@
-package com.command.web.exceptions;
+package com.order.web.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -9,9 +9,9 @@ Si la requête était mal formée, elle aurait déclenché 400 Bad Request autom
 **/
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class ImpossibleAjouterCommandeException extends RuntimeException {
+public class ImpossibleAjouterOrderException extends RuntimeException {
 
-    public ImpossibleAjouterCommandeException(String message) {
+    public ImpossibleAjouterOrderException(String message) {
         super(message);
     }
 }

@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Paiement {
+public class Pay {
 
     @Id
     @GeneratedValue
@@ -19,10 +19,10 @@ public class Paiement {
 
     private Long numeroCarte;
 
-    public Paiement() {
+    public Pay() {
     }
 
-    public Paiement(int id, Integer idCommande, Integer montant, Long numeroCarte) {
+    public Pay(int id, Integer idCommande, Integer montant, Long numeroCarte) {
         this.id = id;
         this.idCommande = idCommande;
         this.montant = montant;

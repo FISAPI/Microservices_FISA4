@@ -1,0 +1,143 @@
+version: '3'
+
+services:
+  
+  spring-pay-1:
+    image: spring-pay:latest
+    container_name: spring-pay-1
+    hostname: spring-pay-1
+    build:
+      context: microservice-paiement
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
+    depends_on:
+      db-pay:
+        condition: service_started
+
+  spring-pay-2:
+    image: spring-pay:latest
+    container_name: spring-pay-2
+    hostname: spring-pay-2
+    build:
+      context: microservice-paiement
+      dockerfile: Dockerfile
+    ports:
+        - "8082:8080"
+    restart: unless-stopped
+    depends_on:
+      db-pay:
+        condition: service_started
+      
+  spring-product-1:
+    image: spring-product:latest
+    container_name: spring-product-1
+    hostname: spring-product-1
+    build:
+      context: microservice-produits
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8080"
+    restart: unless-stopped
+    depends_on:
+      db-product:
+        condition: service_started
+    
+  spring-product-2:
+    image: spring-product:latest
+    container_name: spring-product-2
+    hostname: spring-product-2
+    build:
+      context: microservice-produits
+      dockerfile: Dockerfile
+    ports:
+      - "8084:8080"
+    restart: unless-stopped
+    depends_on:
+      db-product:
+        condition: service_started
+    
+  spring-order-1:
+    image: spring-order:latest
+    container_name: spring-order-1
+    hostname: spring-order-1
+    build:
+      context: microservice-commandes
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8080"
+    restart: unless-stopped
+    depends_on:
+      db-order:
+        condition: service_started
+    
+  spring-order-2:
+    image: spring-order:latest
+    container_name: spring-order-2
+    hostname: spring-order-2
+    build:
+      context: microservice-commandes
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8080"
+    restart: unless-stopped
+    depends_on:
+      db-order:
+        condition: service_started
+
+
+  db-pay:
+    image: postgres:16
+    container_name: db-pay
+    hostname: db-pay
+    restart: always
+    environment:
+      - POSTGRES_USER=dbpay
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=dbpay
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    expose:
+      - 5432
+    ports:
+      - "5433:5432/tcp"
+    volumes:
+      - "./databases/sql/create-db_pay.sql:/docker-entrypoint-initdb.d/create-db.sql"
+      - "./databases/db_pay:/var/lib/postgresql/data"
+
+  db-product:
+    image: postgres:16
+    container_name: db-product
+    hostname: db-product
+    restart: always
+    environment:
+      - POSTGRES_USER=dbproduct
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=dbproduct
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    expose:
+      - 5432
+    ports:
+      - "5434:5432/tcp"
+    volumes:
+      - "./databases/sql/create-db_product.sql:/docker-entrypoint-initdb.d/create-db.sql"
+      - "./databases/db_product:/var/lib/postgresql/data"
+
+  db-order:
+    image: postgres:16
+    container_name: db-order
+    hostname: db-order
+    restart: always
+    environment:
+      - POSTGRES_USER=dborder
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=dborder
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    expose:
+      - 5432
+    ports:
+      - "5435:5432/tcp"
+    volumes:
+      - "./databases/sql/create-db_order.sql:/docker-entrypoint-initdb.d/create-db.sql"
+      - "./databases/db_order:/var/lib/postgresql/data"
+

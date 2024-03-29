@@ -3,10 +3,11 @@ package com.pay.web.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.CONFLICT)
-public class PaiementExistantException extends RuntimeException {
+@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+public class PayImpossibleException extends RuntimeException {
 
-    public PaiementExistantException(String message) {
+
+    public PayImpossibleException(String message) {
         super(message);
     }
 }

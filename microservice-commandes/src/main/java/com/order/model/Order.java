@@ -1,4 +1,4 @@
-package com.command.model;
+package com.order.model;
 
 
 import javax.persistence.Entity;
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
-public class Commande {
+public class Order {
 
     @Id
     @GeneratedValue
@@ -21,10 +21,10 @@ public class Commande {
 
     private Boolean commandePayee;
 
-    public Commande() {
+    public Order() {
     }
 
-    public Commande(int id, Integer productId, Date dateCommande, Integer quantite, Boolean commandePayee) {
+    public Order(int id, Integer productId, Date dateCommande, Integer quantite, Boolean commandePayee) {
         this.id = id;
         this.productId = productId;
         this.dateCommande = dateCommande;

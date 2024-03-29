@@ -1,11 +1,11 @@
 package com.pay.dao;
 
-import com.pay.model.Paiement;
+import com.pay.model.Pay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PaiementDao extends JpaRepository<Paiement, Integer>{
+public interface PayDao extends JpaRepository<Pay, Integer>{
 
-    Paiement findByidCommande(int idCommande);
+    Pay findByidCommande(int idCommande);
 }
