@@ -15,15 +15,19 @@ public class Pay {
     @Column(unique = true)
     private Integer id_order;
 
+    private Long numCard;
+
     private Integer montant;
 
 
     public Pay() {
     }
 
-    public Pay(int id, Integer idCommande, Integer montant) {
+    public Pay(int id, Integer idCommande,Long numCard, Integer montant) {
         this.id_payment = id;
+        this.id_order = idCommande;
         this.montant = montant;
+        this.numCard = numCard;
     }
 
     public int getId() {
@@ -50,6 +54,13 @@ public class Pay {
         this.montant = montant;
     }
 
+    public Long getNumCard() {
+        return numCard;
+    }
+
+    public void setNumCard(Long numCard) {
+        this.numCard = numCard;
+    }
 
     @Override
     public String toString() {
@@ -58,5 +69,23 @@ public class Pay {
                 ", idCommande=" + id_order +
                 ", montant=" + montant +
                 '}';
+    }
+
+    public boolean isValidCardNumber() {
+        int sum = 0;
+        boolean alternate = false;
+        String cardNumberString = this.numCard.toString();
+        for (int i = cardNumberString.length() - 1; i >= 0; i--) {
+            int n = Integer.parseInt(cardNumberString.substring(i, i + 1));
+            if (alternate) {
+                n *= 2;
+                if (n > 9) {
+                    n -= 9;
+                }
+            }
+            sum += n;
+            alternate = !alternate;
+        }
+        return sum % 10 == 0;
     }
 }

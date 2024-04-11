@@ -17,7 +17,10 @@ public class PayController {
 
     @PostMapping(value = "/paiement")
     public ResponseEntity<Pay>  payerUneCommande(@RequestBody Pay paiement){
-
+        // Vérifier si le numéro de carte est valide
+        if (!paiement.isValidCardNumber()) {
+            throw new PayImpossibleException("Le numéro de carte est invalide");
+        }
 
         //Vérifions s'il y a déjà un paiement enregistré pour cette commande
         Pay paiementExistant = paiementDao.findByidCommande(paiement.getIdCommande());
@@ -26,18 +29,9 @@ public class PayController {
         //Enregistrer le paiement
         Pay nouveauPaiement = paiementDao.save(paiement);
 
-
         if(nouveauPaiement == null) throw new PayImpossibleException("Erreur, impossible d'établir le paiement, réessayez plus tard");
 
-
-
-        //TODO Nous allons appeler le Microservice Commandes ici pour lui signifier que le paiement est accepté
-
         return new ResponseEntity<Pay>(nouveauPaiement, HttpStatus.CREATED);
-
     }
-
-
-
 
 }
