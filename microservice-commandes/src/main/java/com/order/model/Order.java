@@ -11,41 +11,27 @@ public class Order {
 
     @Id
     @GeneratedValue
-    private int id;
-
-    private Integer productId;
+    private int id_order;
 
     private Date dateCommande;
-
-    private Integer quantite;
 
     private Boolean commandePayee;
 
     public Order() {
     }
 
-    public Order(int id, Integer productId, Date dateCommande, Integer quantite, Boolean commandePayee) {
-        this.id = id;
-        this.productId = productId;
+    public Order(int id, Date dateCommande, Boolean commandePayee) {
+        this.id_order = id;
         this.dateCommande = dateCommande;
-        this.quantite = quantite;
         this.commandePayee = commandePayee;
     }
 
     public int getId() {
-        return id;
+        return id_order;
     }
 
     public void setId(int id) {
-        this.id = id;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+        this.id_order = id;
     }
 
     public Date getDateCommande() {
@@ -54,14 +40,6 @@ public class Order {
 
     public void setDateCommande(Date dateCommande) {
         this.dateCommande = dateCommande;
-    }
-
-    public Integer getQuantite() {
-        return quantite;
-    }
-
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
     }
 
     public Boolean getCommandePayee() {
@@ -75,7 +53,7 @@ public class Order {
     @Override
     public String toString() {
         return "commande{" +
-                "id=" + id +
+                "id=" + id_order +
                 ", productId=" + productId +
                 ", dateCommande=" + dateCommande +
                 ", quantite=" + quantite +

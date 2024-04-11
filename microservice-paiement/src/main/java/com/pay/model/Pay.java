@@ -10,10 +10,10 @@ public class Pay {
 
     @Id
     @GeneratedValue
-    private int id;
+    private int id_payment;
 
     @Column(unique = true)
-    private Integer idCommande;
+    private Integer id_order;
 
     private Integer montant;
 
@@ -22,17 +22,17 @@ public class Pay {
     }
 
     public Pay(int id, Integer idCommande, Integer montant) {
-        this.id = id;
+        this.id_payment = id;
         this.idCommande = idCommande;
         this.montant = montant;
     }
 
     public int getId() {
-        return id;
+        return id_payment;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id_payment = id;
     }
 
     public Integer getIdCommande() {
@@ -55,7 +55,7 @@ public class Pay {
     @Override
     public String toString() {
         return "Paiement{" +
-                "id=" + id +
+                "id=" + id_payment +
                 ", idCommande=" + idCommande +
                 ", montant=" + montant +
                 '}';
