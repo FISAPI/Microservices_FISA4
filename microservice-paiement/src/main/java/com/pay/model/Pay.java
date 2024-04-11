@@ -23,7 +23,6 @@ public class Pay {
 
     public Pay(int id, Integer idCommande, Integer montant) {
         this.id_payment = id;
-        this.idCommande = idCommande;
         this.montant = montant;
     }
 
@@ -36,11 +35,11 @@ public class Pay {
     }
 
     public Integer getIdCommande() {
-        return idCommande;
+        return id_order;
     }
 
-    public void setIdCommande(Integer idCommande) {
-        this.idCommande = idCommande;
+    public void setIdCommande(Integer id_order) {
+        this.id_order = id_order;
     }
 
     public Integer getMontant() {
@@ -56,7 +55,7 @@ public class Pay {
     public String toString() {
         return "Paiement{" +
                 "id=" + id_payment +
-                ", idCommande=" + idCommande +
+                ", idCommande=" + id_order +
                 ", montant=" + montant +
                 '}';
     }

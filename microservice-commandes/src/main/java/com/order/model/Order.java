@@ -15,15 +15,12 @@ public class Order {
 
     private Date dateCommande;
 
-    private Boolean commandePayee;
-
     public Order() {
     }
 
     public Order(int id, Date dateCommande, Boolean commandePayee) {
         this.id_order = id;
         this.dateCommande = dateCommande;
-        this.commandePayee = commandePayee;
     }
 
     public int getId() {
@@ -42,22 +39,11 @@ public class Order {
         this.dateCommande = dateCommande;
     }
 
-    public Boolean getCommandePayee() {
-        return commandePayee;
-    }
-
-    public void setCommandePayee(Boolean commandePayee) {
-        this.commandePayee = commandePayee;
-    }
-
     @Override
     public String toString() {
         return "commande{" +
                 "id=" + id_order +
-                ", productId=" + productId +
                 ", dateCommande=" + dateCommande +
-                ", quantite=" + quantite +
-                ", commandePayee=" + commandePayee +
                 '}';
     }
 }
