@@ -12,6 +12,17 @@ services:
     ports:
       - "8080:8080"
     restart: unless-stopped
+    
+  spring-config:
+    image: spring-config:latest
+    container_name: spring-config
+    hostname: spring-config
+    build:
+      context: spring-config
+      dockerfile: Dockerfile
+    ports:
+      - "8087:8080"
+    restart: unless-stopped
   
   spring-pay-1:
     image: spring-pay:latest
