@@ -15,4 +15,5 @@ FROM openjdk:17
 COPY --from=build /target/*.jar app.jar
 
 EXPOSE 9102
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
