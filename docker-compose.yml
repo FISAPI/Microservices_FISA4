@@ -22,6 +22,18 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8087:8080"
+    restart: unless-stopped
+
+  eureka-server:
+    image: eureka-server:latest
+    container_name: eureka-server
+    hostname: eureka-server
+    build:
+      context: eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - "9102:9102"
+    restart: unless-stopped
   
   spring-pay-1:
     image: spring-pay:latest

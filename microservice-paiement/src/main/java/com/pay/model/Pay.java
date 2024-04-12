@@ -17,16 +17,14 @@ public class Pay {
 
     private Integer montant;
 
-    private Long numeroCarte;
 
     public Pay() {
     }
 
-    public Pay(int id, Integer idCommande, Integer montant, Long numeroCarte) {
+    public Pay(int id, Integer idCommande, Integer montant) {
         this.id = id;
         this.idCommande = idCommande;
         this.montant = montant;
-        this.numeroCarte = numeroCarte;
     }
 
     public int getId() {
@@ -53,13 +51,6 @@ public class Pay {
         this.montant = montant;
     }
 
-    public Long getNumeroCarte() {
-        return numeroCarte;
-    }
-
-    public void setNumeroCarte(Long numeroCarte) {
-        this.numeroCarte = numeroCarte;
-    }
 
     @Override
     public String toString() {
@@ -67,7 +58,6 @@ public class Pay {
                 "id=" + id +
                 ", idCommande=" + idCommande +
                 ", montant=" + montant +
-                ", numeroCarte=" + numeroCarte +
                 '}';
     }
 }
