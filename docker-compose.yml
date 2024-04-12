@@ -163,3 +163,16 @@ services:
       - "./databases/sql/create-db_order.sql:/docker-entrypoint-initdb.d/create-db.sql"
       - "./databases/db_order:/var/lib/postgresql/data"
 
+  zuul-server:
+    image: zuul-server:latest
+    container_name: zuul-server
+    hostname: zuul-server
+    build:
+      context: zuul-server
+      dockerfile: Dockerfile
+    ports:
+      - "9004:9004"
+    restart: unless-stopped
+    depends_on:
+      spring-order-2:
+        condition: service_started
