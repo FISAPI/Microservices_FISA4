@@ -22,7 +22,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8087:8080"
-    restart: unless-stopped
   
   spring-pay-1:
     image: spring-pay:latest
