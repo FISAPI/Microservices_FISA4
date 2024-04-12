@@ -10,9 +10,9 @@ public class Product {
 
     @Id
     @GeneratedValue
-    private int id;
+    private int id_product;
 
-    private String titre;
+    private String title;
 
     private String description;
 
@@ -25,27 +25,27 @@ public class Product {
     }
 
     public Product(int id, String titre, String description, String image, Double prix) {
-        this.id = id;
-        this.titre = titre;
+        this.id_product = id;
+        this.title = titre;
         this.description = description;
         this.image = image;
         this.prix = prix;
     }
 
     public int getId() {
-        return id;
+        return id_product;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id_product = id;
     }
 
     public String getTitre() {
-        return titre;
+        return title;
     }
 
     public void setTitre(String titre) {
-        this.titre = titre;
+        this.title = titre;
     }
 
     public String getDescription() {
@@ -75,8 +75,8 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
-                ", titre='" + titre + '\'' +
+                "id=" + id_product +
+                ", titre='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
                 ", prix=" + prix +
