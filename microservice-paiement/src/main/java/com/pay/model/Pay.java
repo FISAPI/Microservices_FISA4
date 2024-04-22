@@ -70,22 +70,4 @@ public class Pay {
                 ", montant=" + montant +
                 '}';
     }
-
-    public boolean isValidCardNumber() {
-        int sum = 0;
-        boolean alternate = false;
-        String cardNumberString = this.numCard.toString();
-        for (int i = cardNumberString.length() - 1; i >= 0; i--) {
-            int n = Integer.parseInt(cardNumberString.substring(i, i + 1));
-            if (alternate) {
-                n *= 2;
-                if (n > 9) {
-                    n -= 9;
-                }
-            }
-            sum += n;
-            alternate = !alternate;
-        }
-        return sum % 10 == 0;
-    }
 }

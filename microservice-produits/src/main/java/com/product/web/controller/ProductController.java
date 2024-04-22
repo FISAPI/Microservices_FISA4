@@ -6,42 +6,71 @@ import com.product.model.Product;
 import com.product.web.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
 
-@RefreshScope
+//@RefreshScope
 @RestController
+@RequestMapping("/product")
 public class ProductController {
-    private final ProductDao productDao;
+    private final ProductDao productRepository;
     private final AppPropertiesConfig appProperties;
 
-    public ProductController(ProductDao productDao, AppPropertiesConfig appProperties){
-        this.productDao = productDao;
+    public ProductController(ProductDao productRepository, AppPropertiesConfig appProperties){
+        this.productRepository = productRepository;
         this.appProperties = appProperties;
     }
 
-// Affiche la liste de tous les produits disponibles
+// Affiche la liste de tous les products disponibles
 
-    @GetMapping(value = "/Produits")
-    public List<Product> listeDesProduits()
-    {
-        List<Product> products = productDao.findAll();
+//    @GetMapping(value = "/Products")
+//    public List<Product> listeDesProducts()
+//    {
+//        List<Product> products = productDao.findAll();
+//
+//        if(products.isEmpty()) throw new ProductNotFoundException("Aucun product n'est disponible à la vente");
+//
+//        List<Product> listeLimitee = products.subList(0, appProperties.getLimitDeProducts());
+//
+//        return listeLimitee;
+//    }
 
-        if(products.isEmpty()) throw new ProductNotFoundException("Aucun produit n'est disponible à la vente");
-
-        List<Product> listeLimitee = products.subList(0, appProperties.getLimitDeProduits());
-
-        return listeLimitee;
+    //    @GetMapping(value = "/test")
+//    public int test()
+//    {
+//        return appProperties.getLimitDeProducts();
+//    }
+    @GetMapping("/all")
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 
-    @GetMapping(value = "/test")
-    public int test()
-    {
-        return appProperties.getLimitDeProduits();
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable int id) {
+        return productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/create")
+    public Product createProduct(@RequestBody Product product) {
+        return productRepository.save(product);
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable int id, @RequestBody Product product) {
+        return productRepository.findById(id).map(p -> {
+            p.setTitre(product.getTitre());
+            p.setDescription(product.getDescription());
+            p.setPrix(product.getPrix());
+            return productRepository.save(p);
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteProduct(@PathVariable int id) {
+        productRepository.deleteById(id);
     }
 }
-

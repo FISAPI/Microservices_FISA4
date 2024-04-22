@@ -15,10 +15,28 @@ public class PayController {
     @Autowired
     PayDao paiementDao;
 
+    public boolean isValidCardNumber(Pay paiement) {
+        int sum = 0;
+        boolean alternate = false;
+        String cardNumberString = paiement.getNumCard().toString();
+        for (int i = cardNumberString.length() - 1; i >= 0; i--) {
+            int n = Integer.parseInt(cardNumberString.substring(i, i + 1));
+            if (alternate) {
+                n *= 2;
+                if (n > 9) {
+                    n -= 9;
+                }
+            }
+            sum += n;
+            alternate = !alternate;
+        }
+        return sum % 10 == 0;
+    }
+
     @PostMapping(value = "/paiement")
     public ResponseEntity<Pay>  payerUneCommande(@RequestBody Pay paiement){
         // Vérifier si le numéro de carte est valide
-        if (!paiement.isValidCardNumber()) {
+        if (!this.isValidCardNumber(paiement)) {
             throw new PayImpossibleException("Le numéro de carte est invalide");
         }
 
