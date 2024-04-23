@@ -148,7 +148,6 @@ services:
       - "5433:5432/tcp"
     volumes:
       - "./databases/sql/create-db_pay.sql:/docker-entrypoint-initdb.d/create-db.sql"
-      - "./databases/db_pay:/var/lib/postgresql/data"
 
   db-product:
     image: postgres:16
@@ -166,7 +165,6 @@ services:
       - "5434:5432/tcp"
     volumes:
       - "./databases/sql/create-db_product.sql:/docker-entrypoint-initdb.d/create-db.sql"
-      - "./databases/db_product:/var/lib/postgresql/data"
 
   db-order:
     image: postgres:16
@@ -184,5 +182,4 @@ services:
       - "5435:5432/tcp"
     volumes:
       - "./databases/sql/create-db_order.sql:/docker-entrypoint-initdb.d/create-db.sql"
-      - "./databases/db_order:/var/lib/postgresql/data"
 

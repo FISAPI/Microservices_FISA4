@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Pay {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     private int id_payment;
 
     @Column(unique = true)
