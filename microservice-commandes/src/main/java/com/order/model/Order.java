@@ -18,7 +18,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, Date dateCommande, Boolean commandePayee) {
+    public Order(int id, Date dateCommande) {
         this.id_order = id;
         this.dateCommande = dateCommande;
     }

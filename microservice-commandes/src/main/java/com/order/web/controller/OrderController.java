@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
     OrderDao commandesDao;
 
-    @PostMapping (value = "/commandes")
+    @PostMapping (value = "/create")
     public ResponseEntity<Order> ajouterCommande(@RequestBody Order commande){
 
         Order nouvelleCommande = commandesDao.save(commande);
@@ -28,7 +29,7 @@ public class OrderController {
         return new ResponseEntity<Order>(commande, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/commandes/{id}")
+    @GetMapping(value = "/{id}")
     public Optional<Order> recupererUneCommande(@PathVariable int id){
 
         Optional<Order> commande = commandesDao.findById(id);

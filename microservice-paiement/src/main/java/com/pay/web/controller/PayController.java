@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/pay")
 public class PayController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class PayController {
         return sum % 10 == 0;
     }
 
-    @PostMapping(value = "/paiement")
+    @PostMapping(value = "/validate")
     public ResponseEntity<Pay>  payerUneCommande(@RequestBody Pay paiement){
         // Vérifier si le numéro de carte est valide
         if (!this.isValidCardNumber(paiement)) {
