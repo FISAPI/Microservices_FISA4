@@ -10,17 +10,18 @@ import java.util.Date;
 public class Order {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     private int id_order;
 
     private Date dateCommande;
 
-    public Order() {
-    }
-
-    public Order(int id, Date dateCommande, Boolean commandePayee) {
+    public Order(int id, Date dateCommande) {
         this.id_order = id;
         this.dateCommande = dateCommande;
+    }
+
+    public Order() {
+
     }
 
     public int getId() {
