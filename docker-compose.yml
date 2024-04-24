@@ -52,7 +52,7 @@ services:
       spring-config:
             condition: service_healthy
     healthcheck:
-      test: curl --fail --silent localhost:9004/actuator/routes | grep '{}' || exit 1
+      test: curl --fail --silent localhost:9004/actuator/routes | grep '{' || exit 1
       interval: 10s
       timeout: 2s
       retries: 10
