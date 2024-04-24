@@ -37,23 +37,30 @@ public class PayController {
     @PostMapping(value = "/validate")
     public ResponseEntity<Pay> payerUneCommande(@RequestBody PaymentRequest request){
         Long numCard = request.getNumCard();
+        int numOrder = request.getNumOrder();
+        float montant = request.getMontant();
+
         // Vérifier si le numéro de carte est valide
         if (!this.isValidCardNumber(numCard)) {
             throw new PayImpossibleException("Le numéro de carte est invalide");
-        } else {
-            return new ResponseEntity<Pay>(HttpStatus.OK);
         }
 
-        //Vérifions s'il y a déjà un paiement enregistré pour cette commande
-       // Pay paiementExistant = paiementDao.findByidCommande(paiement.getIdCommande());
-        //if(paiementExistant != null) throw new PayExistantException("Cette commande est déjà payée");
+        // Vérifions s'il y a déjà un paiement enregistré pour cette commande
+        Pay paiementExistant = paiementDao.findByidCommande(numOrder);
+        if(paiementExistant != null) throw new PayImpossibleException("Cette commande est déjà payée");
 
-        //Enregistrer le paiement
-        //Pay nouveauPaiement = paiementDao.save(paiement);
+        // Enregistrer le paiement
+        Pay nouveauPaiement = new Pay();
+        nouveauPaiement.setIdCommande(numOrder);
+        nouveauPaiement.setMontant(montant);
 
-        //if(nouveauPaiement == null) throw new PayImpossibleException("Erreur, impossible d'établir le paiement, réessayez plus tard");
+        try {
+            paiementDao.save(nouveauPaiement);
+        } catch (Exception e) {
+            throw new PayImpossibleException("Erreur, impossible d'établir le paiement, réessayez plus tard");
+        }
 
-        // new ResponseEntity<Pay>(nouveauPaiement, HttpStatus.CREATED);
+        return new ResponseEntity<Pay>(nouveauPaiement, HttpStatus.CREATED);
     }
 
 }

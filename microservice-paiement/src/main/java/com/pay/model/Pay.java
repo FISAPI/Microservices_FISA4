@@ -15,19 +15,17 @@ public class Pay {
     @Column(unique = true, name = "id_order")
     private Integer idCommande;
 
-    private Long numCard;
-
-    private Integer montant;
+    private float montant;
 
 
     public Pay() {
     }
 
-    public Pay(int id, Integer idCommande,Long numCard, Integer montant) {
+    public Pay(int id, Integer idCommande, float montant) {
         this.id_payment = id;
         this.idCommande = idCommande;
         this.montant = montant;
-        this.numCard = numCard;
+
     }
 
     public int getId() {
@@ -46,20 +44,12 @@ public class Pay {
         this.idCommande = idCommande;
     }
 
-    public Integer getMontant() {
+    public float getMontant() {
         return montant;
     }
 
-    public void setMontant(Integer montant) {
+    public void setMontant(float montant) {
         this.montant = montant;
-    }
-
-    public Long getNumCard() {
-        return numCard;
-    }
-
-    public void setNumCard(Long numCard) {
-        this.numCard = numCard;
     }
 
     @Override
