@@ -52,4 +52,13 @@ public class CommandeController {
         return commande;
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void supprimerCommande(@PathVariable int id){
+        List<Commande_Product> commande_Products = commande_ProductDao.findByCommandeId(id);
+        commande_ProductDao.deleteAll(commande_Products);
+        commandesDao.deleteById(id);
+        // TODO : delete tous les commande_product qui ont cette commande
+
+    }
+
 }
