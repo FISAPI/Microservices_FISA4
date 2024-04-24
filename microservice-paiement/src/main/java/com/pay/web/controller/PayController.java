@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/pay")
@@ -15,6 +16,9 @@ public class PayController {
 
     @Autowired
     PayDao paiementDao;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     public boolean isValidCardNumber(Long cardNumber) {
         int sum = 0;
@@ -39,6 +43,14 @@ public class PayController {
         Long numCard = request.getNumCard();
         int numOrder = request.getNumOrder();
         float montant = request.getMontant();
+
+        // Vérifier l'existence de la commande en communiquant avec le microservice de commande
+        String orderServiceUrl = "http://zuul-server:9004/spring-order/commande/" + numOrder;
+        ResponseEntity<String> response = restTemplate.getForEntity(orderServiceUrl, String.class);
+
+        if (response.getStatusCode().isError()) {
+            throw new PayImpossibleException("La commande n'existe pas");
+        }
 
         // Vérifier si le numéro de carte est valide
         if (!this.isValidCardNumber(numCard)) {
