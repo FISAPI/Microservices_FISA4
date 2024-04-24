@@ -16,10 +16,10 @@ public class PayController {
     @Autowired
     PayDao paiementDao;
 
-    public boolean isValidCardNumber(Pay paiement) {
+    public boolean isValidCardNumber(Long cardNumber) {
         int sum = 0;
         boolean alternate = false;
-        String cardNumberString = paiement.getNumCard().toString();
+        String cardNumberString = cardNumber.toString();
         for (int i = cardNumberString.length() - 1; i >= 0; i--) {
             int n = Integer.parseInt(cardNumberString.substring(i, i + 1));
             if (alternate) {
@@ -35,22 +35,26 @@ public class PayController {
     }
 
     @PostMapping(value = "/validate")
-    public ResponseEntity<Pay>  payerUneCommande(@RequestBody Pay paiement){
+    public ResponseEntity<Pay> payerUneCommande(@RequestBody PaymentRequest request){
+        Long numCard = request.getNumCard();
         // Vérifier si le numéro de carte est valide
-        if (!this.isValidCardNumber(paiement)) {
+        if (!this.isValidCardNumber(numCard)) {
             throw new PayImpossibleException("Le numéro de carte est invalide");
+        } else {
+            return new ResponseEntity<Pay>(HttpStatus.OK);
         }
 
         //Vérifions s'il y a déjà un paiement enregistré pour cette commande
-        Pay paiementExistant = paiementDao.findByidCommande(paiement.getIdCommande());
-        if(paiementExistant != null) throw new PayExistantException("Cette commande est déjà payée");
+       // Pay paiementExistant = paiementDao.findByidCommande(paiement.getIdCommande());
+        //if(paiementExistant != null) throw new PayExistantException("Cette commande est déjà payée");
 
         //Enregistrer le paiement
-        Pay nouveauPaiement = paiementDao.save(paiement);
+        //Pay nouveauPaiement = paiementDao.save(paiement);
 
-        if(nouveauPaiement == null) throw new PayImpossibleException("Erreur, impossible d'établir le paiement, réessayez plus tard");
+        //if(nouveauPaiement == null) throw new PayImpossibleException("Erreur, impossible d'établir le paiement, réessayez plus tard");
 
-        return new ResponseEntity<Pay>(nouveauPaiement, HttpStatus.CREATED);
+        // new ResponseEntity<Pay>(nouveauPaiement, HttpStatus.CREATED);
     }
 
 }
+
