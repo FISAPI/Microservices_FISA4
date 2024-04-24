@@ -2,6 +2,8 @@ version: '3'
 
 services:
 
+  # --------------- FRONT ----------------
+
   vue-front:
     image: vue-front:latest
     container_name: vue-front
@@ -12,7 +14,10 @@ services:
     ports:
       - "8080:8080"
     restart: unless-stopped
-    
+
+  # --------------------------------------
+
+  # --------------- CONFIG ---------------
   spring-config:
     image: spring-config:latest
     container_name: spring-config
@@ -20,9 +25,16 @@ services:
     build:
       context: spring-config
       dockerfile: Dockerfile
+    volumes:
+      - maven-cache-config:/root/.m2
     ports:
       - "8087:8080"
     restart: unless-stopped
+    healthcheck:
+      test: curl --fail --silent localhost:8080/actuator/health | grep health || exit 1
+      interval: 10s
+      timeout: 2s
+      retries: 10
 
   zuul-server:
     image: zuul-server:latest
@@ -31,9 +43,19 @@ services:
     build:
       context: zuul-server
       dockerfile: Dockerfile
+    volumes:
+      - maven-cache-zuul:/root/.m2
     ports:
       - "9004:9004"
     restart: unless-stopped
+    depends_on:
+      spring-config:
+            condition: service_healthy
+    healthcheck:
+      test: curl --fail --silent localhost:9004/actuator/routes | grep '{}' || exit 1
+      interval: 10s
+      timeout: 2s
+      retries: 10
 
   eureka-server:
     image: eureka-server:latest
@@ -42,11 +64,23 @@ services:
     build:
       context: eureka-server
       dockerfile: Dockerfile
+    volumes:
+      - maven-cache-eureka:/root/.m2
     ports:
       - "9102:9102"
       - "8088:8080"
     restart: unless-stopped
-  
+    depends_on:
+      spring-config:
+        condition: service_healthy
+    healthcheck:
+      test: curl --fail --silent localhost:9102/eureka/apps | grep '<applications>' || exit 1
+      interval: 10s
+      timeout: 2s
+      retries: 10
+  # --------------------------------------
+
+  # --------------- MICROSERVICES ---------------
   spring-pay-1:
     image: spring-pay:latest
     container_name: spring-pay-1
@@ -54,12 +88,20 @@ services:
     build:
       context: microservice-paiement
       dockerfile: Dockerfile
+    volumes:
+      - maven-cache-pay:/root/.m2
     ports:
       - "8081:8080"
     restart: unless-stopped
     depends_on:
       db-pay:
-        condition: service_started
+        condition: service_healthy
+      spring-config:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zuul-server:
+        condition: service_healthy
 
   spring-pay-2:
     image: spring-pay:latest
@@ -68,12 +110,20 @@ services:
     build:
       context: microservice-paiement
       dockerfile: Dockerfile
+    volumes:
+      - maven-cache-pay:/root/.m2
     ports:
         - "8082:8080"
     restart: unless-stopped
     depends_on:
       db-pay:
-        condition: service_started
+        condition: service_healthy
+      spring-config:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zuul-server:
+        condition: service_healthy
       
   spring-product-1:
     image: spring-product:latest
@@ -82,12 +132,20 @@ services:
     build:
       context: microservice-produits
       dockerfile: Dockerfile
+    volumes:
+      - maven-cache-product:/root/.m2
     ports:
       - "8083:8080"
     restart: unless-stopped
     depends_on:
       db-product:
-        condition: service_started
+        condition: service_healthy
+      spring-config:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zuul-server:
+        condition: service_healthy
     
   spring-product-2:
     image: spring-product:latest
@@ -96,12 +154,20 @@ services:
     build:
       context: microservice-produits
       dockerfile: Dockerfile
+    volumes:
+      - maven-cache-product:/root/.m2
     ports:
       - "8084:8080"
     restart: unless-stopped
     depends_on:
       db-product:
-        condition: service_started
+        condition: service_healthy
+      spring-config:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zuul-server:
+        condition: service_healthy
     
   spring-order-1:
     image: spring-order:latest
@@ -110,12 +176,20 @@ services:
     build:
       context: microservice-commandes
       dockerfile: Dockerfile
+    volumes:
+        - maven-cache-order:/root/.m2
     ports:
       - "8085:8080"
     restart: unless-stopped
     depends_on:
       db-order:
-        condition: service_started
+        condition: service_healthy
+      spring-config:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zuul-server:
+        condition: service_healthy
     
   spring-order-2:
     image: spring-order:latest
@@ -124,14 +198,23 @@ services:
     build:
       context: microservice-commandes
       dockerfile: Dockerfile
+    volumes:
+        - maven-cache-order:/root/.m2
     ports:
       - "8086:8080"
     restart: unless-stopped
     depends_on:
       db-order:
-        condition: service_started
+        condition: service_healthy
+      spring-config:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      zuul-server:
+        condition: service_healthy
+  # --------------------------------------
 
-
+  # --------------- DATABASES ---------------
   db-pay:
     image: postgres:16
     container_name: db-pay
@@ -148,6 +231,12 @@ services:
       - "5433:5432/tcp"
     volumes:
       - "./databases/sql/create-db_pay.sql:/docker-entrypoint-initdb.d/create-db.sql"
+      - "./databases/db_pay:/var/lib/postgresql/data"
+    healthcheck:
+      test: "pg_isready -U dbpay -d dbpay"
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   db-product:
     image: postgres:16
@@ -165,6 +254,12 @@ services:
       - "5434:5432/tcp"
     volumes:
       - "./databases/sql/create-db_product.sql:/docker-entrypoint-initdb.d/create-db.sql"
+      - "./databases/db_product:/var/lib/postgresql/data"
+    healthcheck:
+      test: "pg_isready -U dbproduct -d dbproduct"
+      interval: 10s
+      timeout: 3s
+      retries: 3
 
   db-order:
     image: postgres:16
@@ -182,4 +277,18 @@ services:
       - "5435:5432/tcp"
     volumes:
       - "./databases/sql/create-db_order.sql:/docker-entrypoint-initdb.d/create-db.sql"
+      - "./databases/db_order:/var/lib/postgresql/data"
+    healthcheck:
+      test: "pg_isready -U dborder -d dborder"
+      interval: 10s
+      timeout: 3s
+      retries: 3
+  # --------------------------------------
 
+volumes:
+    maven-cache-config:
+    maven-cache-zuul:
+    maven-cache-eureka:
+    maven-cache-pay:
+    maven-cache-product:
+    maven-cache-order:
