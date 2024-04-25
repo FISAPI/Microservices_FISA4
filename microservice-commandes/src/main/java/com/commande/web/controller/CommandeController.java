@@ -2,9 +2,11 @@ package com.commande.web.controller;
 
 import com.commande.dao.CommandeDao;
 import com.commande.model.Commande;
+import com.commande.model.Commande_Product;
 import com.commande.web.exceptions.CommandeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.commande.dao.Commande_ProductDao;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,7 @@ public class CommandeController {
 
     @Autowired
     CommandeDao commandesDao;
+    Commande_ProductDao commande_ProductDao;
 
     public CommandeController(CommandeDao productRepository){
         this.commandesDao = productRepository;

@@ -1,6 +1,7 @@
 package com.commande.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,15 +13,16 @@ public class Commande_Product {
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY) // AUTO (default), IDENTITY, SEQUENCE, TABLE (in Oracle)
     private int id_commande_product;
-    private int id_commande;
+    @Column(unique = true, name = "id_commande")
+    private int commandeId;
     private int id_product;
-    private int quantite;
+    private int quantity;
 
     public Commande_Product(int id_commande_product, int id_commande, int id_product, int quantite) {
         this.id_commande_product = id_commande_product;
-        this.id_commande = id_commande;
+        this.commandeId = id_commande;
         this.id_product = id_product;
-        this.quantite = quantite;
+        this.quantity = quantite;
     }
 
     public Commande_Product() {
@@ -38,11 +40,11 @@ public class Commande_Product {
     }
 
     public int getId_commande() {
-        return id_commande;
+        return commandeId;
     }
 
     public void setId_commande(int id_commande) {
-        this.id_commande = id_commande;
+        this.commandeId = id_commande;
     }
 
     public int getId_product() {
@@ -54,20 +56,20 @@ public class Commande_Product {
     }
 
     public int getQuantite() {
-        return quantite;
+        return quantity;
     }
 
     public void setQuantite(int quantite) {
-        this.quantite = quantite;
+        this.quantity = quantite;
     }
 
     @Override
     public String toString() {
         return "Commande_Product{" +
                 "id_commande_product=" + id_commande_product +
-                ", id_commande=" + id_commande +
+                ", id_commande=" + commandeId +
                 ", id_product=" + id_product +
-                ", quantite=" + quantite +
+                ", quantite=" + quantity +
                 '}';
     }
 }
