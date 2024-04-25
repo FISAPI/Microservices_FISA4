@@ -12,7 +12,7 @@ public class Pay {
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     private int id_payment;
 
-    @Column(unique = true, name = "id_order")
+    @Column(unique = true, name = "id_commande")
     private Integer idCommande;
 
     private float montant;
