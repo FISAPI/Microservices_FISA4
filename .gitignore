@@ -26,3 +26,6 @@ replay_pid*
 /vue-front/package-lock.json
 databases/db_*
 
+.idea/
+
+
