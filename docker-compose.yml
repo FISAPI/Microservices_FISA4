@@ -52,7 +52,7 @@ services:
       spring-config:
             condition: service_healthy
     healthcheck:
-      test: curl --fail --silent localhost:9004/actuator/routes | grep '{}' || exit 1
+      test: curl --fail --silent localhost:9004/actuator/routes | grep '{' || exit 1
       interval: 10s
       timeout: 2s
       retries: 10
@@ -236,7 +236,7 @@ services:
       test: "pg_isready -U dbpay -d dbpay"
       interval: 10s
       timeout: 3s
-      retries: 3
+      retries: 10
 
   db-product:
     image: postgres:16
@@ -259,7 +259,7 @@ services:
       test: "pg_isready -U dbproduct -d dbproduct"
       interval: 10s
       timeout: 3s
-      retries: 3
+      retries: 10
 
   db-order:
     image: postgres:16
@@ -282,7 +282,7 @@ services:
       test: "pg_isready -U dborder -d dborder"
       interval: 10s
       timeout: 3s
-      retries: 3
+      retries: 10
   # --------------------------------------
 
 volumes:
