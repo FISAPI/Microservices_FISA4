@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PayDao extends JpaRepository<Pay, Integer>{
+    public Pay findByidCommande(int idCommande);
 
-    Pay findByidCommande(int idCommande);
 }

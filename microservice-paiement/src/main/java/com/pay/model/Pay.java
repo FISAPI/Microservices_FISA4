@@ -9,32 +9,31 @@ import javax.persistence.Id;
 public class Pay {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+    private int id_payment;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "id_commande")
     private Integer idCommande;
 
-    private Integer montant;
+    private float montant;
 
-    private Long numeroCarte;
 
     public Pay() {
     }
 
-    public Pay(int id, Integer idCommande, Integer montant, Long numeroCarte) {
-        this.id = id;
+    public Pay(int id, Integer idCommande, float montant) {
+        this.id_payment = id;
         this.idCommande = idCommande;
         this.montant = montant;
-        this.numeroCarte = numeroCarte;
+
     }
 
     public int getId() {
-        return id;
+        return id_payment;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id_payment = id;
     }
 
     public Integer getIdCommande() {
@@ -45,29 +44,20 @@ public class Pay {
         this.idCommande = idCommande;
     }
 
-    public Integer getMontant() {
+    public float getMontant() {
         return montant;
     }
 
-    public void setMontant(Integer montant) {
+    public void setMontant(float montant) {
         this.montant = montant;
-    }
-
-    public Long getNumeroCarte() {
-        return numeroCarte;
-    }
-
-    public void setNumeroCarte(Long numeroCarte) {
-        this.numeroCarte = numeroCarte;
     }
 
     @Override
     public String toString() {
         return "Paiement{" +
-                "id=" + id +
+                "id=" + id_payment +
                 ", idCommande=" + idCommande +
                 ", montant=" + montant +
-                ", numeroCarte=" + numeroCarte +
                 '}';
     }
 }
