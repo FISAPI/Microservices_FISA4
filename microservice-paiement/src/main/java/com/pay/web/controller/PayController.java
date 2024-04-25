@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/pay")
 public class PayController {
@@ -74,6 +76,18 @@ public class PayController {
 
         return new ResponseEntity<Pay>(nouveauPaiement, HttpStatus.CREATED);
     }
+
+    // Vérfier si un paiement existe (ce qui signifie que la commande est payée) en passant l'id de la commande
+    // Sans retourner le paiement
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Pay> recupererUnPaiement(@PathVariable int id){
+        Pay paiement = paiementDao.findByidCommande(id);
+
+        if(paiement == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }
 
