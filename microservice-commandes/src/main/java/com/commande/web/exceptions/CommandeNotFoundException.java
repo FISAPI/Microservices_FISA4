@@ -1,13 +1,13 @@
-package com.order.web.exceptions;
+package com.commande.web.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class OrderNotFoundException extends RuntimeException {
+public class CommandeNotFoundException extends RuntimeException {
 
 
-    public OrderNotFoundException(String message) {
+    public CommandeNotFoundException(String message) {
         super(message);
     }
 }
