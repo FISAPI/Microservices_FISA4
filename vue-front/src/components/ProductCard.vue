@@ -1,4 +1,5 @@
 <template>
+
   <BCard
       :title="product.title"
       :img-src="product.image"
@@ -25,22 +26,7 @@ export default {
       type: Object,
       required: true
     }
-  },
-  data() {
-    return {
-      products: [
-        { id: 1, name: "Equality - Jersey 2022", size: "XS", price: 34.90, quantity: 3 }
-        // Ajoute d'autres articles selon ta structure de données
-      ],
-      fields: [
-        { key: "actions", label: "", sortable: false },
-        { key: "thumbnail", label: "Miniature" },
-        { key: "name", label: "Produit" },
-        { key: "price", label: "Prix" },
-        { key: "quantity", label: "Quantité" },
-        { key: "subtotal", label: "Sous-total" }
-      ]
-    };
+  }
 }
 
 </script>
