@@ -1,6 +1,6 @@
 <template>
   <BNavbar variant="primary" v-b-color-mode="'dark'">
-    <BNavbarBrand tag="h1" class="mb-0">FIS'AIR</BNavbarBrand>
+    <BNavbarBrand tag="h1" class="mb-0" to="/">FIS'AIR</BNavbarBrand>
     <BNavbarNav>
       <router-link to="/products"><BNavItem>Nos produits</BNavItem></router-link>
       <router-link to="/about"><BNavItem>Qui sommes-nous ?</BNavItem></router-link>
