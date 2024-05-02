@@ -18,7 +18,7 @@
             <h5>{{ product.prix }} €</h5>
           </BCardText>
 
-          <BButton href="#" variant="primary">Voir détails</BButton>
+          <BButton :href="'/product/' + product.id" variant="primary">Voir détails</BButton>
           <BButton href="#" variant="primary"  @click="addtoCart(product)">Ajouter au panier</BButton>
         </BCardBody>
       </BCol>

@@ -69,7 +69,7 @@
 }
 
 .bg-purple {
-  background: linear-gradient(to bottom, #add8e6, rgba(144, 238, 144, 0.7));
+  background-color: rgba(109, 173, 193, 0.75);
   /*background-color: rgba(109, 173, 193, 0.75);*/
 }
 
