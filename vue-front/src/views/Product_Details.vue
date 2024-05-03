@@ -1,13 +1,67 @@
 <template>
   <div class="container">
     <div class="row" v-if="product">
-      <div class="col-md-6">
-        <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+      <div class="col-md-6 p-3 products-container">
+        <div class="row">
+          <div class="col-4">
+            <div class="image-container">
+              <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="image-container">
+              <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="image-container">
+              <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="image-container">
+              <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="image-container">
+              <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="image-container">
+              <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+            </div>
+          </div>
+        </div><div class="row">
+        <div class="col-4">
+          <div class="image-container">
+            <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="image-container">
+            <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="image-container">
+            <img :src="'../' + product.image" alt="Produit" class="img-fluid">
+          </div>
+        </div>
+      </div>
+
       </div>
       <div class="col-md-6">
-        <h2>{{ product.title }}</h2>
+        <h2>{{ product.titre }}</h2>
+        <br>
+        <br>
         <p>{{ product.description }}</p>
+        <br><br>
         <p>Prix : {{ product.prix }} €</p>
+        <br><br>
         <button @click="addtoCart(product)" class="btn btn-primary">Ajouter au panier</button>
       </div>
     </div>
@@ -20,8 +74,20 @@
 
 <style scoped>
 .img-fluid {
-  max-width: 100%;
-  height: auto;
+  max-height: 400px;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+.products-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
 
@@ -33,7 +99,7 @@ export default {
   data() {
     return {
       product: {
-        title: '',
+        titre: '',
         description: '',
         prix: 0,
         image: ''
