@@ -49,7 +49,7 @@ export default {
     fetchProducts(id) {
       this.loading = true;
 
-      axios.get('http://localhost:9004/spring-product/product/${id}', {
+      axios.get(`http://localhost:9004/spring-product/product/${id}`, {
       headers: {
         'Content-Type': 'application/json'
       }
