@@ -62,6 +62,9 @@ You can then pay the order.
 /!\ The payment is not real, it is a mock payment. The payment service will always return a success after checking the card number given using the Luhn algorithm.<br>
 /!\ Selling air is not a real business, it is just a mock example. It may even be illegal depending and where you are.<br>
 
+## How to use
+You can either open your browser and go to localhost:8080 or use postman with the collection given at the root of the project.
+
 ## External ressources
 https://docs.spring.io/spring-cloud-config/docs/current/reference/html/<br>
 https://www.baeldung.com/spring-cloud-configuration<br>
