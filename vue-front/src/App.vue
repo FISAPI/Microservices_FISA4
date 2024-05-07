@@ -1,47 +1,22 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <BNavbar variant="primary" v-b-color-mode="'dark'">
+    <BNavbarBrand tag="h1" class="mb-0" to="/">FIS'AIR</BNavbarBrand>
+    <BNavbarNav>
+      <router-link to="/products"><BNavItem>Nos produits</BNavItem></router-link>
+      <router-link to="/about"><BNavItem>Qui sommes-nous ?</BNavItem></router-link>
+      <router-link to="/contact"><BNavItem>Contact</BNavItem></router-link>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
+    </BNavbarNav>
 
-  <main>
-    <TheWelcome />
-  </main>
+    <!-- Panier -->
+    <BNavbarNav class="ml-auto">
+      <router-link to="/cart"><BNavItem>Panier</BNavItem></router-link>
+    </BNavbarNav>
+
+  </BNavbar>
+
+  <router-view/>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<script setup>
+</script>
