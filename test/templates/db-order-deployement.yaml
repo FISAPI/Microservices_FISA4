@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-order
+  labels:
+    app: db-order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-order
+  template:
+    metadata:
+      labels:
+        app: db-order
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.dbOrder.user }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.dbOrder.password }}
+            - name: POSTGRES_DB
+              value: db-order
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+          volumeMounts:
+            - name: sql-init
+              mountPath: /docker-entrypoint-initdb.d
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: sql-init
+          configMap:
+            name: {{ .Values.dbOrder.sqlConfigMap }}
+        - name: db-data
+          emptyDir: {}
+      volumeMounts:
+        - name: sql-init
+          mountPath: /docker-entrypoint-initdb.d
+          subPath: create-db.sql

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-product
+  labels:
+    app: db-product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-product
+  template:
+    metadata:
+      labels:
+        app: db-product
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.dbProduct.user }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.dbProduct.password }}
+            - name: POSTGRES_DB
+              value: db-product
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+          volumeMounts:
+            - name: sql-init
+              mountPath: /docker-entrypoint-initdb.d
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: sql-init
+          configMap:
+            name: {{ .Values.dbProduct.sqlConfigMap }}
+        - name: db-data
+          emptyDir: {}
+      volumeMounts:
+        - name: sql-init
+          mountPath: /docker-entrypoint-initdb.d
+          subPath: create-db.sql

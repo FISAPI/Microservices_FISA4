@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-pay
+  labels:
+    app: db-pay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-pay
+  template:
+    metadata:
+      labels:
+        app: db-pay
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.dbPay.user }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.dbPay.password }}
+            - name: POSTGRES_DB
+              value: db-pay
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
+          volumeMounts:
+            - name: sql-init
+              mountPath: /docker-entrypoint-initdb.d
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: sql-init
+          configMap:
+            name: {{ .Values.dbPay.sqlConfigMap }}
+        - name: db-data
+          emptyDir: {}
+      volumeMounts:
+        - name: sql-init
+          mountPath: /docker-entrypoint-initdb.d
+          subPath: create-db.sql

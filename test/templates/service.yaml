@@ -1,0 +1,117 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-spring-pay
+spec:
+  type: {{ .Values.serviceType }}
+  selector:
+    app: spring-pay
+  ports:
+  - protocol: TCP
+    port: {{ .Values.springPay.port }}
+    targetPort: {{ .Values.springPay.port }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-spring-product
+spec:
+  type: {{ .Values.serviceType }}
+  selector:
+    app: spring-product
+  ports:
+  - protocol: TCP
+    port: {{ .Values.springProduct.port }}
+    targetPort: {{ .Values.springProduct.port }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-spring-order
+spec:
+  type: {{ .Values.serviceType }}
+  selector:
+    app: spring-order
+  ports:
+  - protocol: TCP
+    port: {{ .Values.springOrder.port }}
+    targetPort: {{ .Values.springOrder.port }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-db-pay
+  labels:
+    app: {{ .Release.Name }}-db-pay
+spec:
+  ports:
+    - protocol: TCP
+      port: {{ .Values.dbPay.port }}
+      targetPort: {{ .Values.dbPay.port }}
+  selector:
+    app: {{ .Release.Name }}-db-pay
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-db-product
+  labels:
+    app: {{ .Release.Name }}-db-product
+spec:
+  ports:
+    - protocol: TCP
+      port: {{ .Values.dbProduct.port }}
+      targetPort: {{ .Values.dbProduct.port }}
+  selector:
+    app: {{ .Release.Name }}-db-product
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-db-order
+  labels:
+    app: {{ .Release.Name }}-db-order
+spec:
+  ports:
+    - protocol: TCP
+      port: {{ .Values.dbOrder.port }}
+      targetPort: {{ .Values.dbOrder.port }}
+  selector:
+    app: {{ .Release.Name }}-db-order
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-config
+spec:
+  selector:
+    app: spring-config
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-vue-front
+  labels:
+    app: {{ .Release.Name }}-vue-front
+spec:
+  ports:
+    - protocol: TCP
+      port: {{ .Values.vueFront.port }}
+      targetPort: 8080
+  selector:
+    app: {{ .Release.Name }}-vue-front
+  type: ClusterIP

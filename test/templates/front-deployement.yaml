@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vue-front
+  labels:
+    app: vue-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vue-front
+  template:
+    metadata:                   
+      labels:
+        app: vue-front
+    spec:
+      containers:
+      - name: vue-front
+        image: "{{ .Values.vueFront.image }}"
+        imagePullPolicy: Never  # Ne pas tenter de tirer l'image du registre distant
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,50 @@
+springPay:
+  image: "spring-pay:latest"
+  port: 8081
+
+springProduct:
+  image: "spring-product:latest"
+  port: 8082
+
+springOrder:
+  image: "spring-order:latest"
+  port: 8083
+
+dbPay:
+  port: 5433
+  user: dbpay
+  password: admin
+  dbName: dbpay
+  sqlFile: create-db_pay.sql
+  dataPath: db_pay
+  sqlConfigMap: db-pay-sql
+
+  
+dbProduct:
+  port: 5434
+  user: dbproduct
+  password: admin
+  dbName: dbproduct
+  sqlFile: create-db_product.sql
+  dataPath: db_product
+  sqlConfigMap: db-product-sql
+
+  
+dbOrder:
+  port: 5435
+  user: dborder
+  password: admin
+  dbName: dborder
+  sqlFile: create-db_order.sql
+  dataPath: db_order
+  sqlConfigMap: db-order-sql
+
+springConfig:
+  image: "spring-config:latest"
+  port: 8087
+
+vueFront:
+  image: "vue-front:latest"
+  port: 8080
+
+serviceType: ClusterIP # Change to LoadBalancer or NodePort if needed
